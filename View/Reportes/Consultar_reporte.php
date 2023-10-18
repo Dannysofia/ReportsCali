@@ -36,23 +36,23 @@
   <main>
     <div class="container">
         <div class="row">
-            <div class="col-lg-3" style="margin-right: 95px;">
+            <div class="col-lg-2" style="margin-right: 95px;">
               <section>
 
                 <div class="container">
                     <div class="row justify-content-center">
                       <div class="col-lg-3 col-md-3 d-flex flex-column align-items-center justify-content-center">
-                        <img src="../../assets/img/MAPA.png" width="500" height="600"/>
+                      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d125073.31778963153!2d-76.52126349885016!3d3.41957925943635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1697425794263!5m2!1ses-419!2sco" width="800" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>  
                       </div>
                     </div>
                 </div>
               </section>
             </div>
-            <div class="col-1"></div>
+            <div class="col-2"></div>
 
             <div class="col-lg-7">
              <section class="section">
-                <div class="col-lg-12 col-md-8 flex-column justify-content-center">
+                <div class="col-lg-12 col-md-12 flex-column justify-content-center">
                   <div class="d-flex col-lg-12 py-4 col-md-12 justify-content-center">
                     <h1 style="font-family:Georgia, serif; color:#2980b9; text-align: center; font-weight: bold;">Reportes</h1>                     
                   </div>
@@ -84,9 +84,12 @@
                             <td>9/09/2023</td>
                             <td>Reporte1</td>
                             <td>Activo</td>
-                            <td><a href="View/Reportes/Ver reporte.html" class="d-flex align-items-center w-auto">
-                              <img src="../../assets/img/documento.png" alt="Reportes" width="40" height="40">
-                            </a></td>
+                            <td>
+                              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#Verreporte">
+                                <img src="../../assets/img/documento.png" alt="Reportes" width="40" height="40">
+                              </button>
+                              <?php  include_once 'Ver_reporte.php';?>
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">2</th>
@@ -94,9 +97,12 @@
                             <td>9/09/2023</td>
                             <td>Reporte1</td>
                             <td>Activo</td>
-                            <td><a href="View/Reportes/Ver reporte.html" class="d-flex align-items-center w-auto">
-                              <img src="../../assets/img/documento.png" alt="Reportes" width="40" height="40">
-                            </a></td>
+                            <td>
+                              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#Verreporte">
+                                <img src="../../assets/img/documento.png" alt="Reportes" width="40" height="40">
+                              </button>
+                              <?php  include_once 'Ver_reporte.php';?>
+                            </td>
                           </tr>
 
                         </tbody>
