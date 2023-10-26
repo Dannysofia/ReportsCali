@@ -9,16 +9,16 @@ function registro(){
     };
 
     url='../../Modelo/Usuarios/Registro_modelo.php';
-    console.log(info)
     axios({
         method:'POST',
         url:url,
-        responseType:"json",
-        data:info
-        
+        //responseType:"json",
+        data:info  
       })
       .then(function (response) {
-        console.log(response);
+          window.location.assign('http://localhost/ReportsCali/View/Login.html');
+          alert("Registro insertado correctamente.");
+
       })
       .catch(function (error) {
         console.log(error);

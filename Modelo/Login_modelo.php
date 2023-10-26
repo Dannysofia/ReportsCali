@@ -21,12 +21,13 @@ class Login {
                     $sql = "SELECT * FROM usuarios WHERE correo_electronico = '$correo' AND contrasena = '$contrasena'";
                     $response = $crud->consultar($sql);
 
+                    // Verificar si se encontraron resultados en la consulta
                     if (!empty($response) && count($response) > 0) {
-                        echo "<script type='text/javascript'>"
-                        ."window.location.href='http://localhost/ReportsCali/Index.php'"
-                        ."</script>";
-                    }else{
-                        echo "Inicio de sesión fallido";
+                        // Inicio de sesión exitoso, imprime la respuesta deseada
+                        echo "OK";
+                    } else {
+                        // Inicio de sesión fallido, imprime un mensaje de error
+                        echo "Fallido";
                     }
 
             } else {
@@ -39,7 +40,7 @@ class Login {
                 "success" => false,
                 "message" => "Error: " . $e->getMessage()
             );
-            // Devolver la respuesta en formato JSON en caso de error
+            //Devolver la respuesta en formato JSON en caso de error
             header('Content-Type: application/json');
             echo json_encode($response);
         }

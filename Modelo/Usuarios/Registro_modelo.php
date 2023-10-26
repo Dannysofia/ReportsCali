@@ -13,6 +13,7 @@ class Registrousuarios {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Obtener los datos enviados en la solicitud POST
                 $_POST=json_decode(file_get_contents('php://input'),true);
+
                 $rol = $_POST['rol'];
                 $nombre = $_POST['nombre'];
                 $apellido = $_POST['apellido'];
@@ -21,7 +22,6 @@ class Registrousuarios {
                 $codigo = $_POST['codigo'];
 
                 //Se valida si el código del secretario esta registrado en la BD.
-
                 if($rol==1){
                     $conexion = new crud();
                     $resultadoConsulta = $conexion->consultar("SELECT Id_codigo FROM codigos_secretario WHERE Codigo = '$codigo'");
@@ -30,7 +30,7 @@ class Registrousuarios {
                         $cod=1;
                         $codigo=$resultadoConsulta[0]->Id_codigo;
                     }else{
-                        echo "El código no esta registrado";
+                        //echo "El código no esta registrado";
                         $cod=2;
                     }
                 }else{
