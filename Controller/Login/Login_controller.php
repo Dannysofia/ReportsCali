@@ -1,7 +1,7 @@
 <?php
-include '../CRUD/CRUD.php';
+include '../Model/Login/Login_model.php';
 
-class Login {
+class Login_controller {
 
     function __construct() {
         
@@ -11,24 +11,35 @@ class Login {
         try {
             // Comprobar si la solicitud es POST
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Obtener los datos enviados en la solicitud POST
-                $_POST=json_decode(file_get_contents('php://input'),true);
+                // Crear una instancia de la clase 'Login_model'
+                $Iniciar = new Login_model();
 
+                // Obtener los datos enviados en la solicitud POST
                 $correo = $_POST['correo'];
                 $contrasena = $_POST['contrasena'];
 
-                    $crud = new crud();
+                if(isset($_POST['correo']) && isset($_POST['contrasena']) && $correo!="" && $contrasena!=""){
+
                     $sql = "SELECT * FROM usuarios WHERE correo_electronico = '$correo' AND contrasena = '$contrasena'";
-                    $response = $crud->consultar($sql);
+                    $response = $Iniciar->consultar($sql);
 
                     // Verificar si se encontraron resultados en la consulta
                     if (!empty($response) && count($response) > 0) {
                         // Inicio de sesión exitoso, imprime la respuesta deseada
                         echo "OK";
+                        redirect('index.php'); 
                     } else {
                         // Inicio de sesión fallido, imprime un mensaje de error
-                        echo "Fallido";
+                        echo "<div class='alert alert-primary alert-dismissible fade show' role='alert'>".
+                        "Correo electronico y/o Contraseña incorrecta".
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>".
+                        "</button></div>";
+
+                        redirect('login.php');
                     }
+                }else{
+                    redirect('login.php'); 
+                }
 
             } else {
                 // Si no es una solicitud POST, devolver un mensaje de error
@@ -47,8 +58,3 @@ class Login {
 
     }
 }
-
-// Crear una instancia de la clase 'Registrousuarios'
-$Iniciar = new Login();
-// Llamar a la función 'Registrar_usuario' para manejar la solicitud POST
-$Iniciar->Iniciarsesion();

@@ -21,16 +21,12 @@
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body style="background: linear-gradient(to top, #2980b9, #6dd5fa, #ffffff)">
+  <?php
+      include_once '../webService/helpers.php';
+  ?>
 
   <main>
     <div class="container">
@@ -48,14 +44,14 @@
 
               </section>
             </div>
-            <div class="col-1"></div>
-            <div class="col-lg-7">
+            <div class="col-2"></div>
+            <div class="col-lg-6">
               <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-5">
                 <div class="container">
                   <div class="row justify-content-end">
                     <div class="col-lg-10 col-md-12 d-flex flex-column align-items-center justify-content-center">
 
-                      <div class="d-flex col-8 py-4">
+                      <div class="d-flex col-8 py-3">
                           <img src="../assets/img/pin.png" width="50" height="50" alt="">
                           <h1 style="font-family:Georgia, serif">ReportsCali</h1>
                       </div><!-- End Logo -->
@@ -68,33 +64,33 @@
                             <h5 class="card-title text-center pb-0 fs-3" style="font-family:Georgia, serif">Inicio de sesión</h5>                
                           </div>
 
-                          <form class="row g-3 needs-validation" novalidate>
+                          <form class="row g-3" action="<?php echo getUrl("Login","Login","Iniciarsesion",false,"ajax")?>" method="POST" id="form-login">
 
-                            <div class="col-12">
+                            <div class="col-12 form-group">
                               <label for="yourUsername" class="form-label" style="font-family:Georgia, serif">Correo electrónico</label>
                               <div class="input-group has-validation">
-                                <input type="text" name="correo" class="form-control" id="correo" required>
+                                <input type="text" name="correo" class="form-control form-control-user" id="correo" required>
                                 <div class="invalid-feedback">Por favor ingrese su correo electrónico.</div>
                               </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-12 form-group">
                               <label for="yourPassword" class="form-label" style="font-family:Georgia, serif">Contraseña</label>
-                              <input type="password" name="contrasena" class="form-control" id="contrasena" required>
+                              <input type="password" name="contrasena" class="form-control form-control-user" id="contrasena" required>
                               <div class="invalid-feedback">Por favor ingrese su contraseña</div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-12 form-group">
                               <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
                                 <label class="form-check-label" for="rememberMe" style="font-family:Georgia, serif">Recordar usuario</label>
                               </div>
                             </div>
                             <div class="col-12">
-                              <button class="btn btn-primary w-100" type="button" style="font-family:Georgia, serif" onclick="iniciarsesion()">Ingresar</button>
+                              <button type="submit" class="btn btn-primary w-100" id="Iniciarsesión" style="font-family:Georgia, serif">Ingresar</button>
                             </div>
                             <div class="col-12" style="text-align: right;font-family:Georgia, serif">
-                              <p class="small mb-0">¿No tienes cuenta? <a href="Usuarios/Registro.html">Registrate</a></p>
+                              <p class="small mb-0">¿No tienes cuenta? <a href="Registro.php">Registrate</a></p>
                             </div>
                           </form>
 
@@ -112,8 +108,6 @@
 
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="../Controller/Login_controlador.js"></script>
 
 </body>
 

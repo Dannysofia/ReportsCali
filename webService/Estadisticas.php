@@ -1,3 +1,13 @@
+<?php
+
+include '../Controller/Estadisticas/Estadisticas_controller.php';
+$test = new Estadisticas_controller();
+$dataEstado = $test->Estado();
+$dataDanos = $test->tipodaño();
+
+
+?>
+
 <div class="col-lg-6">
     <div class="card">
         <div class="card-body">
@@ -59,6 +69,9 @@
             <!-- Pie Chart -->
             <canvas id="pieChart" style="max-height: 250px;"></canvas>
             <script>
+                // Utiliza los datos JSON obtenidos de PHP
+                var dataFromPHP =<?php echo $dataEstado; ?>;
+                var values = dataFromPHP.map(item => item.cantidad_reportes);
                 document.addEventListener("DOMContentLoaded", () => {
                     new Chart(document.querySelector('#pieChart'), {
                         type: 'pie',
@@ -69,8 +82,8 @@
                                 'Completado'
                             ],
                             datasets: [{
-                                label: 'My First Dataset',
-                                data: [300, 50, 100],
+                                label: '',
+                                data: values,
                                 backgroundColor: [
                                     'rgb(255, 99, 132)',
                                     'rgb(54, 162, 235)',
@@ -96,9 +109,16 @@
             <div id="radialBarChart"></div>
 
             <script>
+                // Utiliza los datos JSON obtenidos de PHP
+                var dataFromPHPd =<?php echo $dataDanos; ?>;
+                var valuesd = dataFromPHPd.map(item => item.cantidad_danos);
+
+                //Se suman los valores del JSON
+                var suma = valuesd.reduce((total, valor) => total + valor, 0);
+
                 document.addEventListener("DOMContentLoaded", () => {
                     new ApexCharts(document.querySelector("#radialBarChart"), {
-                        series: [44, 55, 67, 83],
+                        series: valuesd,
                         chart: {
                             height: 270,
                             type: 'radialBar',
@@ -120,13 +140,13 @@
                                         label: 'Total',
                                         formatter: function (w) {
                                             // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                                            return 249
+                                            return suma
                                         }
                                     }
                                 }
                             }
                         },
-                        labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
+                        labels: ['Huecos', 'Baches', 'Hundimientos', 'Grietas','Piel de cocodrilo'],
                     }).render();
                 });
             </script>

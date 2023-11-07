@@ -1,18 +1,21 @@
 <?php
-include '../../CRUD/CRUD.php';
+include '../Model/Usuarios/Registro_model.php';
 
-class Registrousuarios {
+class Registro_controller{
 
     function __construct() {
         
     }
 
-    function Registrar_usuario() {
+    function Registrarusuario() {
         try {
             // Comprobar si la solicitud es POST
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                // Crear una instancia de la clase 'Registrousuarios'
+                $conexion = new Registro_model();
+
                 // Obtener los datos enviados en la solicitud POST
-                $_POST=json_decode(file_get_contents('php://input'),true);
 
                 $rol = $_POST['rol'];
                 $nombre = $_POST['nombre'];
@@ -23,14 +26,13 @@ class Registrousuarios {
 
                 //Se valida si el código del secretario esta registrado en la BD.
                 if($rol==1){
-                    $conexion = new crud();
                     $resultadoConsulta = $conexion->consultar("SELECT Id_codigo FROM codigos_secretario WHERE Codigo = '$codigo'");
 
                     if (!empty($resultadoConsulta)) {
                         $cod=1;
                         $codigo=$resultadoConsulta[0]->Id_codigo;
                     }else{
-                        //echo "El código no esta registrado";
+                        echo "El código no esta registrado";
                         $cod=2;
                     }
                 }else{
@@ -44,7 +46,12 @@ class Registrousuarios {
                     $crud = new crud();
                     $sql = "INSERT INTO usuarios (Nombre, Apellido, Correo_electronico, Contrasena, Id_codigo, Id_rol) VALUES ('$nombre', '$apellido', '$correo', '$contrasena', '$codigo', '$rol')";
                     $response = $crud->insertar($sql);
-                    echo $response;
+
+                    if($response=="Registro insertado correctamente."){
+                      redirect('login.php');
+                    }else{
+                      echo "No";
+                    }
                 }
 
             } else {
@@ -65,7 +72,3 @@ class Registrousuarios {
     }
 }
 
-// Crear una instancia de la clase 'Registrousuarios'
-$Crearusuario = new Registrousuarios();
-// Llamar a la función 'Registrar_usuario' para manejar la solicitud POST
-$Crearusuario->Registrar_usuario();
