@@ -1,6 +1,5 @@
 <?php
 include '../Model/Login/Login_model.php';
-
 class Login_controller {
 
     function __construct() {
@@ -22,6 +21,10 @@ class Login_controller {
 
                     $sql = "SELECT * FROM usuarios WHERE correo_electronico = '$correo' AND contrasena = '$contrasena'";
                     $response = $Iniciar->consultar($sql);
+
+                    foreach ($response as $row) {
+                        $_SESSION['usuario'] = $row->Id_usuario;;
+                    }
 
                     // Verificar si se encontraron resultados en la consulta
                     if (!empty($response) && count($response) > 0) {

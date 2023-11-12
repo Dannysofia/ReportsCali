@@ -66,7 +66,6 @@
                             <th scope="col">Dirección</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">Prioridad</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -79,9 +78,8 @@
                             echo '<tr>';
                             echo '<td>'.$row->fecha_reporte.'</td>';
                             echo '<td>'.$row->Direccion.'</td>';
-                            echo '<td>'.$row->Descripción.'</td>';
+                            echo '<td>'.$row->Descripcion.'</td>';
                             echo '<td>'.$row->Est_nombre.'</td>';
-                            echo '<td>'.$row->Pri_nombre.'</td>';
                             echo '<td>';
                             echo '<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#Verreporte">
                               <img src="../assets/img/documento.png" alt="Reportes" width="40" height="40">

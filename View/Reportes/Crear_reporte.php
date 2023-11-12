@@ -28,27 +28,41 @@
       include_once '../webService/helpers.php';
   ?>
 
-<div class="col-lg-12 w-50 h-50">
+<div class="col-lg-12 d-flex justify-content-center align-items-center h-100">
     <section>
-        <div class="container">
-            <div class="justify-content-center">
+        <div class="container border p-3">
                 <h1 style="font-family:Georgia, serif; color:#2980b9; text-align: center; font-weight: bold;">Crear Reporte</h1>
-                <form class="row g-3">
-                    <div class="col-4 justify-content-center">
-                        <label for="inputNanme4" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="inputNanme4">
-                    </div>
-                    <div class="col-4">
-                        <label for="inputNanme4" class="form-label">Tamaño</label>
-                        <input type="text" class="form-control" id="inputNanme4">
-                    </div>
-                    <div class="col-4">
-                        <label for="inputNanme4" class="form-label">Unidad</label>
-                        <select id="inputState" class="form-select">
+                <form class="row g-3" action="<?php echo getUrl("Reportes","Reportes","postCrear",false,"ajax")?>" method="POST">
+                    <div class="col-6">
+                        <label for="dano" class="form-label">Daño</label>
+                        <select id="dano" class="form-select" name="dano" >
                             <?php 
-                            if($response){
+                            if($responseTip){
                                 echo "<option selected>Seleccione</option>";
-                                foreach ($response as $row) {
+                                foreach ($responseTip as $row) {
+                                    echo "<option>".$row -> Tip_nombre."</option>";
+                                }
+                            }else{
+                                echo "No existen registros";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-6 justify-content-center">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" name="direccion" id="direccion">
+                    </div>
+                    <div class="col-6">
+                        <label for="tamaño" class="form-label">Tamaño</label>
+                        <input type="number" class="form-control"  name="tamaño"cid="tamaño">
+                    </div>
+                    <div class="col-6">
+                        <label for="unidad" class="form-label">Unidad</label>
+                        <select name="unidad" id="unidad" class="form-select">
+                            <?php 
+                            if($responseUni){
+                                echo "<option selected>Seleccione</option>";
+                                foreach ($responseUni as $row) {
                                     echo "<option>".$row -> Uni_nombre."</option>";
                                 }
                             }else{
@@ -57,36 +71,52 @@
                             ?>
                         </select>
                     </div>
-                    <label for="inputAddress" class="form-label">Ubicación (Coordenadas)</label>
+                    <label for="ubicacion" class="form-label">Ubicación (Coordenadas)</label>
                     <div class="col-4">
-                        <label for="inputAddress" class="form-label">Latitud</label>
-                        <input type="text" class="form-control" id="inputAddress">
+                        <label for="latitud" class="form-label">Latitud</label>
+                        <input type="text" class="form-control" name="latitud" id="latitud">
                     </div>
                     <div class="col-4">
-                        <label for="inputAddress" class="form-label">Longitud</label>
-                        <input type="text" class="form-control" id="inputAddress">
+                        <label for="longitud" class="form-label">Longitud</label>
+                        <input type="text" class="form-control" name="longitud" id="longitud">
                     </div>
                     <div class="col-4">
-                        <label for="inputAddress" class="form-label">Barrio</label>
-                        <input type="text" class="form-control" id="inputAddress">
+                        <label for="Barrio" class="form-label">Barrio</label>
+                        <select name="barrio" id="barrio" class="form-select">
+                            <?php 
+                            if($responseBar){
+                                echo "<option selected>Seleccione</option>";
+                                foreach ($responseBar as $row) {
+                                    echo "<option>".$row -> Bar_nombre."</option>";
+                                }
+                            }else{
+                                echo "No existen registros";
+                            }
+                            ?>
+                        </select>
                     </div>
-                    <div class="col-4">
+                    <div class="col-12">
                         <label for="inputNanme4" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="inputNanme4">
+                        <input type="text" class="form-control" name="descripcion" id="descripcion">
                     </div>
-                    <div class="col-4">
-                        <img src="../../assets/img/imagen.png" width="70" height="70" alt="" style="margin-left: 75px;">
-                        <input type="file" class="form-control" id="inputNanme4">
+                    <div class="col-5">
+                        <img src="../assets/img/imagen.png" width="70" height="70" alt="" style="margin-left: 75px;">
+                        <input type="file" class="form-control" name="imagen" id="imagen">
                     </div>
-                    <div class="col-4">
-                        <img src="../../assets/img/video.png" width="70" height="70" alt="" style="margin-left: 75px;">
-                        <input type="file" class="form-control" id="inputNanme4">
+                    <div class="col-5">
+                        <img src="../assets/img/video.png" width="70" height="70" alt="" style="margin-left: 75px;">
+                        <input type="file" class="form-control" name="video" id="video">
                     </div>
-                        <button type="button" class="btn btn-secondary col-4" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary col-4">Guardar</button>
+                    
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="col-3">
+                            <a href=<?php echo getUrl("Reportes","Reportes","index",false,"ajax")?>><button type="button" class="btn btn-secondary col-4">Cancelar</button></a>
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-primary col-4">Guardar</button>
+                        </div>
+                    </div>
                 </form><!-- Vertical Form -->
-             </div>
-
         </div>
     </section>
 </div>
