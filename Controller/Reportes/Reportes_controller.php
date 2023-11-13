@@ -9,7 +9,7 @@ class Reportes_controller {
     function index(){
         try{
             $conexion=new Reportes_model();
-            $sql="SELECT r.Direccion,r.fecha_reporte,r.Descripcion,r.Id_estado, e.Est_nombre FROM reportes AS r,estados AS e WHERE r.Id_estado=e.Id_estado ORDER BY r.Id_estado ASC";
+            $sql="SELECT r.Id_reportes, r.Direccion,r.fecha_reporte,r.Descripcion,r.Id_estado, e.Est_nombre FROM reportes AS r,estados AS e WHERE r.Id_estado=e.Id_estado ORDER BY r.Id_estado ASC";
             $response = $conexion->consultar($sql);
             include_once '../View/Reportes/Consultar_reporte.php';
 
@@ -63,10 +63,26 @@ class Reportes_controller {
             $longitud=$_POST['longitud'];
             $barrio=$_POST['barrio'];
             $descripcion=$_POST['descripcion'];
-            $imagen=$_POST['imagen'];
-            $video=$_POST['video'];
+            $imagen=$_FILES['imagen'];
+            $video=$_FILES['video'];
 
-            if (!empty($_POST['dano']) && !empty($_POST['direccion']) && !empty($_POST['tamaño']) && !empty($_POST['unidad']) && !empty($_POST['latitud']) && !empty($_POST['longitud']) && !empty($_POST['barrio']) && !empty($_POST['descripcion']) && !empty($_POST['imagen']) && !empty($_POST['video'])) {
+            if (!empty($_POST['dano']) && !empty($_POST['direccion']) && !empty($_POST['tamaño']) && !empty($_POST['unidad']) && !empty($_POST['latitud']) && !empty($_POST['longitud']) && !empty($_POST['barrio']) && !empty($_POST['descripcion']) && !empty($_FILES['imagen']) && !empty($_FILES['video'])) {
+
+                //Guardar imagenes cargadas en la carpeta img de assets
+                $carpeta_destino = "../assets/img/";
+                $nombre_imagen = $_FILES['imagen']['name'];
+                $imagen=$nombre_imagen;
+                $ruta_imagen_temporal = $_FILES['imagen']['tmp_name'];
+                $ruta_imagen_destino = $carpeta_destino . $nombre_imagen;
+                move_uploaded_file($ruta_imagen_temporal, $ruta_imagen_destino);
+
+                //Guardar videos cargados en la carpeta vid de assets
+                $carpeta_destino = "../assets/vid/";
+                $nombre_video = $_FILES['video']['name'];
+                $video=$nombre_video;
+                $ruta_video_temporal = $_FILES['video']['tmp_name'];
+                $ruta_video_destino = $carpeta_destino . $nombre_video;
+                move_uploaded_file($ruta_video_temporal, $ruta_video_destino);
 
                 $sql="SELECT Id_tipos_danos FROM tipos_danos WHERE Tip_nombre='$dano'";
                 $responseTip = $conexion->consultar($sql);
@@ -126,7 +142,7 @@ class Reportes_controller {
                 $id_usu=$_SESSION['usuario'];
                 $id_ord=0;
 
-                $sql= "INSERT INTO reportes (Direccion, fecha_reporte, Descripcion, Longitud, Id_unidad, Id_imagen, Id_video, Id_estado, Id_prioridad, Id_usuario, Id_tipos_danos, Id_ubicacion, Id_barrio, Id_orden_mantenimiento) VALUES ('$direccion','$fecha','$descripcion',$tamaño,$id_uni,$id_img,$id_vid,$id_est,$id_pri,$id_usu,$id_danos,$id_ubi,$id_bar,$id_ord)";
+                $sql= "INSERT INTO reportes (Direccion, fecha_reporte, Descripcion, Tamano, Id_unidad, Id_imagen, Id_video, Id_estado, Id_prioridad, Id_usuario, Id_tipos_danos, Id_ubicacion, Id_barrio, Id_orden_mantenimiento) VALUES ('$direccion','$fecha','$descripcion',$tamaño,$id_uni,$id_img,$id_vid,$id_est,$id_pri,$id_usu,$id_danos,$id_ubi,$id_bar,$id_ord)";
                 $response = $conexion->insertar($sql);
 
                 if($response){
@@ -149,5 +165,44 @@ class Reportes_controller {
             echo json_encode($response);
         }
 
+    }
+
+    function getConsultar(){
+
+        try{ 
+            $conexion=new Reportes_model();
+
+            $id_reporte=$_GET['Id_reportes'];
+
+            $sql="SELECT r.Id_reportes,r.Direccion,r.Descripcion,r.Tamano,r.Id_unidad,u.Uni_nombre,r.Id_imagen,i.Nombre_img,r.Id_video,v.Nombre_vid,r.Id_estado,e.Est_nombre,r.Id_tipos_danos,t.Tip_nombre,r.Id_ubicacion,l.Latitud,l.Longitud,r.Id_barrio,b.Bar_nombre FROM reportes AS r,unidades_medida AS u, imagenes AS i, videos AS v, estados AS e, tipos_danos AS t, ubicaciones AS l, barrios AS b WHERE r.Id_reportes=$id_reporte AND r.Id_estado=e.Id_estado AND r.Id_unidad=u.Id_Unidad AND r.Id_imagen=i.Id_imagenes AND r.Id_video=v.Id_videos AND r.Id_tipos_danos=t.Id_tipos_danos AND r.Id_ubicacion=l.Id_ubicacion AND r.Id_barrio=b.Id_barrio";
+            $response = $conexion->consultar($sql);
+
+            if($response){
+                foreach ($response as $row){
+                    $dano=$row->Tip_nombre;
+                    $dir=$row->Direccion;
+                    $tamaño=$row->Tamano;
+                    $unidad=$row->Uni_nombre;
+                    $lat=$row->Latitud;
+                    $lon=$row->Longitud;
+                    $barrio=$row->Bar_nombre;
+                    $desc=$row->Descripcion;
+                    $img=$row->Nombre_img;
+                    $vid=$row->Nombre_vid;
+                }
+            }
+
+            include_once '../View/Reportes/Ver_reporte.php';
+        }catch (PDOException $e) {
+            $response = array(
+                "success" => false,
+                "message" => "Error: " . $e->getMessage()
+            );
+            //Devolver la respuesta en formato JSON en caso de error
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        }
+
+        include_once '../View/Reportes/Ver_reporte.php'; 
     }
 }

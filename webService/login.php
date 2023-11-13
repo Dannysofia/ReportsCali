@@ -23,7 +23,7 @@
 
 </head>
 
-<body style="background: linear-gradient(to top, #2980b9, #6dd5fa, #ffffff)">
+<body style="background: linear-gradient(to top, #30A6FC, #B1DEFF, #ffffff)">
   <?php
       include_once '../webService/helpers.php';
   ?>
@@ -37,7 +37,7 @@
                 <div class="container">
                     <div class="row justify-content-center">
                       <div class="col-lg-3 col-md-3 d-flex flex-column align-items-center justify-content-center">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d125073.31778963153!2d-76.52126349885016!3d3.41957925943635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1697425794263!5m2!1ses-419!2sco" width="800" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>  
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d125073.31778963153!2d-76.52126349885016!3d3.41957925943635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1697425794263!5m2!1ses-419!2sco" width="800" height="725" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>  
                       </div>
                     </div>
                 </div>

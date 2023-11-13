@@ -4,6 +4,7 @@ include '../Controller/Estadisticas/Estadisticas_controller.php';
 $test = new Estadisticas_controller();
 $dataEstado = $test->Estado();
 $dataDanos = $test->tipodaño();
+$meses = $test->meses();
 
 
 ?>
@@ -16,14 +17,17 @@ $dataDanos = $test->tipodaño();
             <!-- Bar Chart -->
             <canvas id="barChart" style="max-height: 400px;"></canvas>
             <script>
+                var dataFromPHP =<?php echo $meses; ?>;
+                var meses = dataFromPHP.map(item => item.mes);
+                var cant = dataFromPHP.map(item => item.cant);
                 document.addEventListener("DOMContentLoaded", () => {
                     new Chart(document.querySelector('#barChart'), {
                         type: 'bar',
                         data: {
-                            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
+                            labels: meses,
                             datasets: [{
                                 label: '',
-                                data: [65, 59, 80, 81, 56, 55, 40],
+                                data: cant,
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.2)',
                                     'rgba(255, 159, 64, 0.2)',
@@ -134,6 +138,9 @@ $dataDanos = $test->tipodaño();
                                     },
                                     value: {
                                         fontSize: '16px',
+                                        formatter: function (val) {
+                                        return val; // Utiliza el valor directamente sin el símbolo de porcentaje
+                                        }
                                     },
                                     total: {
                                         show: true,
