@@ -60,4 +60,9 @@ class Login_controller {
         }
 
     }
+
+    function Cerrarsesion() {
+        $_SESSION['usuario'] = null;
+        redirect('login.php');
+    }
 }

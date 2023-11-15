@@ -1,3 +1,29 @@
+<?php
+    include_once '../webService/helpers.php';
+    include '../Model/Login/Login_model.php';
+    if(isset($_SESSION['usuario']) === false){
+      redirect('login.php');
+    }
+
+    $id = $_SESSION['usuario'];
+    $Iniciar = new Login_model();
+    $sql = "SELECT * FROM usuarios WHERE Id_usuario = $id";
+    $response = $Iniciar->consultar($sql);
+    $usuario = null;
+    $rol = null;
+
+    foreach ($response as $row) {
+        $usuario = $row;
+    }
+
+    $sql = "SELECT * FROM roles WHERE Id_rol = $usuario->Id_rol";
+    $response = $Iniciar->consultar($sql);
+
+    foreach ($response as $row) {
+        $rol = $row;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,61 +78,35 @@
 
 
 
-    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+    <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
       <i class="bi bi-bell"></i>
       <span class="badge bg-primary badge-number">1</span>
-    </a><!-- End Notification Icon -->
+    </a> -->
+    <!-- End Notification Icon -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-          <li class="dropdown-header">
-            Tiene 1 notificatión
-            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todas</span></a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-exclamation-circle text-warning"></i>
-            <div>
-              <h4>Lorem Ipsum</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>30 min. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li class="dropdown-footer">
-            <a href="#">Show all notifications</a>
-          </li>
-
-        </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
 
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">
+                <?php echo $usuario->Usu_nombre . ' ' . $usuario->Apellido ;?>
+            </span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6> <?php echo $usuario->Usu_nombre . ' ' . $usuario->Apellido ;?> </h6>
+              <span><?php echo $rol->Rol_nombre?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="MiPerfil.php">
                 <i class="bi bi-person"></i>
                 <span>Mi perfil</span>
               </a>
@@ -116,17 +116,11 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Configurar cuenta</span>
-              </a>
-            </li>
-            <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="login.php">
+              <a class="dropdown-item d-flex align-items-center" href="<?php echo getUrl("Login","Login","Cerrarsesion",false,"ajax")?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
               </a>
