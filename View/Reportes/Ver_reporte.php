@@ -82,7 +82,7 @@
                             <a href=<?php echo getUrl("Reportes","Reportes","index",false,"ajax")?>><button type="button" class="btn btn-secondary col-4">Regresar</button></a>
                         </div>
                         <div class="col-6 text-center">
-                            <button type="submit" class="btn btn-success col-4">Crear orden MTO</button>
+                            <a href=<?php echo getUrl("Orden_mto","Orden_mto","getCrear",false,"ajax")?>><button type="button" class="btn btn-success col-4">Crear orden MTO</button></a>
                         </div>
                     </div>
                 </form><!-- Vertical Form -->

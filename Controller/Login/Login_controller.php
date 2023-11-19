@@ -23,7 +23,7 @@ class Login_controller {
                     $response = $Iniciar->consultar($sql);
 
                     foreach ($response as $row) {
-                        $_SESSION['usuario'] = $row->Id_usuario;;
+                        $_SESSION['usuario'] = $row->Id_usuario;
                     }
 
                     // Verificar si se encontraron resultados en la consulta
