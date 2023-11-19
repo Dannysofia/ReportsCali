@@ -158,8 +158,8 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
-          <i><img src="../assets/img/mant.png" alt="Reportes" width="25" height="25"></i>
+        <a class="nav-link " href="<?php echo getUrl("Orden_mto","Orden_mto","index", false, "ajax");?>">
+          <i><img src="../assets/img/mant.png" alt="Ordenes" width="25" height="25"></i>
           <span>Ordenes de Mantenimiento</span>
         </a>
       </li>

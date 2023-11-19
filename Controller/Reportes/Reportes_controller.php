@@ -9,7 +9,7 @@ class Reportes_controller {
     function index(){
         try{
             $conexion=new Reportes_model();
-            $sql="SELECT r.Id_reportes, r.Direccion,r.fecha_reporte,r.Descripcion,r.Id_estado, e.Est_nombre FROM reportes AS r,estados AS e WHERE r.Id_estado=e.Id_estado ORDER BY r.Id_estado ASC";
+            $sql="SELECT r.Id_reportes, r.Direccion,r.fecha_reporte,r.Descripcion,r.Id_estado,r.Id_orden_mantenimiento, e.Est_nombre FROM reportes AS r,estados AS e WHERE r.Id_estado=e.Id_estado ORDER BY r.Id_estado ASC";
             $response = $conexion->consultar($sql);
             include_once '../View/Reportes/Consultar_reporte.php';
 
@@ -189,6 +189,7 @@ class Reportes_controller {
                     $desc=$row->Descripcion;
                     $img=$row->Nombre_img;
                     $vid=$row->Nombre_vid;
+                    $_SESSION['reporte']=$row->Id_reportes;
                 }
             }
 
