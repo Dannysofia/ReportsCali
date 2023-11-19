@@ -44,7 +44,7 @@ class Registro_controller{
 
                 if($cod==1 || $cod==0){
                     $crud = new crud();
-                    $sql = "INSERT INTO usuarios (Nombre, Apellido, Correo_electronico, Contrasena, Id_codigo, Id_rol) VALUES ('$nombre', '$apellido', '$correo', '$contrasena', '$codigo', '$rol')";
+                    $sql = "INSERT INTO usuarios (Usu_nombre, Apellido, Correo_electronico, Contrasena, Id_codigo, Id_rol) VALUES ('$nombre', '$apellido', '$correo', '$contrasena', '$codigo', '$rol')";
                     $response = $crud->insertar($sql);
 
                     if($response=="Registro insertado correctamente."){

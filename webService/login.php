@@ -1,3 +1,10 @@
+<?php
+    include_once '../webService/helpers.php';
+    if(isset($_SESSION['usuario']) === true){
+      redirect('index.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
