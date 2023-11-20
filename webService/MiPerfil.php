@@ -106,7 +106,60 @@
           </div>
 
         </div>
-      </div>
+
+        <div class="col-xl-8">
+
+            <div class="card">
+                <div class="card-body pt-3">
+                        <form class="row g-2 needs-validation" action="<?php echo getUrl("Usuarios","Registro","Aualizarusuario",false,"ajax")?>" method="POST" style="font-family:Georgia, serif">
+
+                        <div class="col-12 form-group">
+                        <label for="yourName" class="form-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" id="nombre" value="<?php echo $usuario->Usu_nombre ?>" required>
+                        <div class="invalid-feedback">Por favor, ingrese su nombre!</div>
+                        </div>
+
+                        <div class="col-12 form-group">
+                        <label for="yourName" class="form-label">Apellidos</label>
+                        <input type="text" name="apellido" class="form-control" id="apellido" value="<?php echo $usuario->Apellido; ?>" required>
+                        <div class="invalid-feedback">Por favor, ingrese su apellido!</div>
+                        </div>
+
+                        <div class="col-12 form-group">
+                        <label for="yourEmail" class="form-label">Correo electrónico</label>
+                        <input type="email" name="correo" class="form-control" id="correo" value="<?php echo $usuario->Correo_electronico; ?>" required>
+                        <div class="invalid-feedback">Por favor ingrese un correo valido!</div>
+                        </div>
+
+                        <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">guardar</button>
+                        </div>
+                    </form>
+
+                    <h1>actualizar contraseña</h1>
+                    
+                    <form class="row g-2 needs-validation" action="<?php echo getUrl("Usuarios","Registro","Aualizarcontrasena",false,"ajax")?>" method="POST" style="font-family:Georgia, serif">
+
+                        <div class="col-12 form-group">
+                        <label for="yourEmail" class="form-label">Contraseña actual</label>
+                        <input type="password" name="contrasena_actual" class="form-control" id="contrasena_actual" required>
+                        <div class="invalid-feedback">Por favor ingrese su contraseña!</div>
+                        </div>
+
+                        <div class="col-12 form-group">
+                        <label for="yourPassword" class="form-label">nueva Contraseña</label>
+                        <input type="password" name="contrasena" class="form-control" id="contrasena" required>
+                        <div class="invalid-feedback">Por favor ingrese su nueva contraseña!</div>
+                        </div>
+
+                        <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">guardar</button>
+                        </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+
     </section>
 
   </main><!-- End #main -->

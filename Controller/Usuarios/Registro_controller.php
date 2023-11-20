@@ -70,5 +70,101 @@ class Registro_controller{
         }
 
     }
+
+    function Aualizarusuario() {
+        try {
+            // Comprobar si la solicitud es POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                // Crear una instancia de la clase 'Registrousuarios'
+                $conexion = new Registro_model();
+
+                // Obtener los datos enviados en la solicitud POST
+
+                $id = $_SESSION['usuario'];
+
+                $nombre = $_POST['nombre'];
+                $apellido = $_POST['apellido'];
+                $correo = $_POST['correo'];
+
+                $crud = new crud();
+                $sql = "update usuarios set Usu_nombre = '{$nombre}', Apellido =' {$apellido}', Correo_electronico = '{$correo}' where Id_usuario = '{$id}'";
+                $response = $crud->insertar($sql);
+
+                if($response=="Registro insertado correctamente."){
+                  redirect('MiPerfil.php');
+                }else{
+                  echo "No";
+                }
+            } else {
+                // Si no es una solicitud POST, devolver un mensaje de error
+                header('HTTP/1.1 405 Method Not Allowed');
+                echo 'Método no permitido.';
+            }
+        } catch (PDOException $e) {
+            $response = array(
+                "success" => false,
+                "message" => "Error: " . $e->getMessage()
+            );
+            // Devolver la respuesta en formato JSON en caso de error
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        }
+
+    }
+
+    function Aualizarcontrasena() {
+        try {
+            // Comprobar si la solicitud es POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                // Crear una instancia de la clase 'Registrousuarios'
+                $conexion = new Registro_model();
+
+                // Obtener los datos enviados en la solicitud POST
+
+                $id = $_SESSION['usuario'];
+
+                $contrsena_actual = $_POST['contrasena_actual'];
+                $contrasena = $_POST['contrasena'];
+
+                $sql = "SELECT * FROM usuarios WHERE Id_usuario = $id";
+                $response = $conexion->consultar($sql);
+                $usuario = null;
+            
+                foreach ($response as $row) {
+                    $usuario = $row;
+                }
+            
+                if ($usuario->Contrasena === $contrsena_actual) {
+                    $crud = new crud();
+                    $sql = "update usuarios set Contrasena = '{$contrasena}' where Id_usuario = '{$id}'";
+                    $response = $crud->insertar($sql);
+    
+                    if($response=="Registro insertado correctamente."){
+                      redirect('MiPerfil.php');
+                    }else{
+                      echo "No";
+                    }
+                } else {
+                    echo "no";
+                }
+            } else {
+                // Si no es una solicitud POST, devolver un mensaje de error
+                header('HTTP/1.1 405 Method Not Allowed');
+                echo 'Método no permitido.';
+            }
+        } catch (PDOException $e) {
+            $response = array(
+                "success" => false,
+                "message" => "Error: " . $e->getMessage()
+            );
+            // Devolver la respuesta en formato JSON en caso de error
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        }
+
+    }
+
 }
 
