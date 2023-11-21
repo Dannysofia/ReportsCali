@@ -33,6 +33,19 @@ class crud {
         }
     }
 
+    function actualizar($sql) {
+        $conexion = new conexion();
+        $pdo = $conexion->conect();
+        $sql = $pdo->prepare($sql);
+        $result = $sql->execute();
+        
+        if ($result) {
+            return "Registro actualizado correctamente.";
+        } else {
+            return "Error al actualizar el registro.";
+        }
+    }
+
     function eliminar($sql) {
         $conexion = new conexion();
         $pdo = $conexion->conect();

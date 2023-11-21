@@ -29,31 +29,21 @@
   <main>
     <div class="container">
         <div class="row">
-            <div class="col-lg-1">
-              <section>
-                  <div class=" d-flex flex-column align-items-center justify-content-center">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d125073.31778963153!2d-76.52126349885016!3d3.41957925943635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1697425794263!5m2!1ses-419!2sco" width="700" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>  
-                  </div>
-              </section>
-            </div>
-            <div class="col-lg-3"></div>
-
-            <div class="col-lg-8">
              <section class="section">
                 <div class="col-lg-12 col-md-12 flex-column">
                   <div class="col-12">
                         <a href='../webService/index.php' style="float:right;"><i class="bi bi-house" style="font-size: 24px;"></i></a>
                   </div>
                   <div class="d-flex col-lg-12 py-4 col-md-12 justify-content-center">
-                    <h1 style="font-family:Georgia, serif; color:#2980b9; text-align: center; font-weight: bold;">Reportes</h1>                     
+                    <h1 style="font-family:Georgia, serif; color:#2980b9; text-align: center; font-weight: bold;">Ordenes de mantenimiento</h1>                     
                   </div>
         
                   <div class="card">
                     <div class="card-body">
                       <div class="d-flex col-lg-12  col-md-12 py-3">
-                      <a class="nav-link " href="<?php echo getUrl("Reportes","Reportes","getCrear",false,"ajax");?>">
+                      <a class="nav-link " href="<?php echo getUrl("Reportes","Reportes","index",false,"ajax");?>">
                        <button type="button" class="btn btn-success">
-                       + Crear reporte
+                       + Crear Orden
                       </button></a>
                       </div>
                       <!-- Table with stripped rows -->
@@ -61,11 +51,12 @@
                         <thead>
                           <tr>
                             <th scope="col">Código</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Dirección</th>
+                            <th scope="col">Fecha creación</th>
+                            <th scope="col">Fecha terminación</th>
                             <th scope="col">Descripción</th>
-                            <th scope="col">Orden</th>
+                            <th scope="col">Supervisor</th>
                             <th scope="col">Estado</th>
+                            <th scope="col">Prioridad</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -76,21 +67,26 @@
                         if($response){
                           foreach ($response as $row) {
                             echo '<tr>';
-                            echo '<td>ORD-'.$row->Id_reportes.'</td>';
-                            echo '<td>'.$row->fecha_reporte.'</td>';
-                            echo '<td>'.$row->Direccion.'</td>';
+                            echo '<td>MTO-'.$row->Id_ordenes_mantenimiento.'</td>';
+                            echo '<td>'.$row->Fecha_creacion.'</td>';
+                            echo '<td>'.$row->Fecha_terminacion.'</td>';
                             echo '<td>'.$row->Descripcion.'</td>';
-                            if(!empty($row->Id_orden_mantenimiento)){
-                              echo '<td>MTO-'.$row->Id_orden_mantenimiento.'</td>';
-                            }else{
-                              echo '<td></td>';
-                            }
+                            echo '<td>'.$row->Supervisor.'</td>';
                             echo '<td>'.$row->Est_nombre.'</td>';
+                            echo '<td style="color: Red;">'.$row->Pri_nombre.'</td>';
                             echo '<td>';
-                            echo '<a class="nav-link" href="'.getUrl("Reportes","Reportes","getConsultar",array("Id_reportes"=>$row->Id_reportes),"ajax").'">
-                            <button type="button" class="btn" style="border: none;">
-                            <img src="../assets/img/documento.png" alt="Reportes" width="45" height="45">
-                            </button></a>';
+                            if($row -> Id_estado==3){
+                              echo '<a class="nav-link" href="'.getUrl("Orden_mto","Orden_mto","getConsultar",array("Id_ordenes"=>$row->Id_ordenes_mantenimiento),"ajax").'">
+                              <button type="button" class="btn" style="border: none;">
+                              <img src="../assets/img/lista.png" alt="Reportes" width="45" height="45">
+                              </button></a>';
+                            }else{
+                              echo '<a class="nav-link" href="'.getUrl("Orden_mto","Orden_mto","getEditar",array("Id_ordenes"=>$row->Id_ordenes_mantenimiento),"ajax").'">
+                              <button type="button" class="btn" style="border: none;">
+                              <img src="../assets/img/editar.png" alt="Reportes" width="45" height="45">
+                              </button></a>';
+                            }
+                            
                             echo '</td>';
                             echo '</tr>';
                           }
@@ -107,7 +103,6 @@
                 </div>
               </div>
           </section>
-        </div>
             
   </main><!-- End #main -->
 

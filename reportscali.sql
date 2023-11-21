@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2023 a las 16:45:31
+-- Tiempo de generación: 19-11-2023 a las 06:44:58
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -128,8 +128,12 @@ CREATE TABLE `imagenes` (
 --
 
 INSERT INTO `imagenes` (`Id_imagenes`, `Nombre_img`) VALUES
-(31, 'descarga.jpg'),
-(32, 'IO44NCMWV5CTJBXTVFT5BOCYGY.jpg');
+(1, 'descarga.jpg'),
+(2, ''),
+(3, ''),
+(4, 'Diagrama Biblioteca.png'),
+(5, 'puente.png'),
+(6, '');
 
 -- --------------------------------------------------------
 
@@ -165,23 +169,22 @@ INSERT INTO `notificaciones` (`Id_notificacion`, `Fecha_notificacion`, `Contenid
 CREATE TABLE `ordenes_mantenimiento` (
   `Id_ordenes_mantenimiento` int(11) NOT NULL,
   `Descripcion` varchar(45) NOT NULL,
-  `Pasos` varchar(45) NOT NULL,
   `Fecha_creacion` date NOT NULL,
+  `Fecha_terminacion` date NOT NULL,
   `Id_usuario` int(11) NOT NULL,
   `Id_prioridad` int(11) NOT NULL,
-  `Id_estado` int(11) NOT NULL
+  `Id_estado` int(11) NOT NULL,
+  `Id_imagen` varchar(100) NOT NULL,
+  `Supervisor` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `ordenes_mantenimiento`
 --
 
-INSERT INTO `ordenes_mantenimiento` (`Id_ordenes_mantenimiento`, `Descripcion`, `Pasos`, `Fecha_creacion`, `Id_usuario`, `Id_prioridad`, `Id_estado`) VALUES
-(1, 'Arreglen la via', 'Paso1, paso2, paso3, paso4', '2023-09-16', 1, 1, 3),
-(2, 'Arreglen la via', 'Paso1, paso2, paso3, paso4', '2023-09-17', 2, 2, 2),
-(3, 'Arreglen la via', 'Paso1, paso2, paso3, paso4', '2023-09-17', 4, 5, 3),
-(4, 'Arreglen la via', 'Paso1, paso2, paso3, paso4', '2023-09-17', 2, 2, 1),
-(5, 'Arreglen la via', 'Paso1, paso2, paso3, paso4', '2023-09-17', 1, 3, 2);
+INSERT INTO `ordenes_mantenimiento` (`Id_ordenes_mantenimiento`, `Descripcion`, `Fecha_creacion`, `Fecha_terminacion`, `Id_usuario`, `Id_prioridad`, `Id_estado`, `Id_imagen`, `Supervisor`) VALUES
+(1, 'test', '2023-11-19', '0000-00-00', 1, 3, 3, '4', 'testt'),
+(2, 'eerr', '2023-11-19', '0000-00-00', 1, 2, 2, '6', 'test');
 
 -- --------------------------------------------------------
 
@@ -199,11 +202,10 @@ CREATE TABLE `prioridades` (
 --
 
 INSERT INTO `prioridades` (`Id_prioridades`, `Pri_nombre`) VALUES
-(1, 'Alta'),
-(2, 'Media'),
-(3, 'Baja'),
-(4, 'Urgente'),
-(5, 'Critica');
+(1, 'Critica'),
+(2, 'Alta'),
+(3, 'Media'),
+(4, 'Baja');
 
 -- --------------------------------------------------------
 
@@ -234,8 +236,8 @@ CREATE TABLE `reportes` (
 --
 
 INSERT INTO `reportes` (`Id_reportes`, `Direccion`, `fecha_reporte`, `Descripcion`, `Tamano`, `Id_unidad`, `Id_imagen`, `Id_video`, `Id_estado`, `Id_prioridad`, `Id_usuario`, `Id_tipos_danos`, `Id_ubicacion`, `Id_barrio`, `Id_orden_mantenimiento`) VALUES
-(26, 'Calle 5 #87-23', '2023-11-13', 'Hueco mortal en la via sin supervisión', 2, 1, 31, 31, 1, 0, 1, 1, 41, 1, 0),
-(27, 'Calle 43 Transversal 12', '2023-11-13', 'Baches en la via', 3, 3, 32, 32, 2, 0, 1, 2, 42, 4, 0);
+(1, 'Calle 5', '2023-11-19', 'test', 2, 1, 1, 2, 3, 0, 1, 5, 1, 1, 1),
+(2, 'Calle 9A-32', '2023-11-19', 'Hueco mortal en la Via', 3, 3, 5, 3, 3, 0, 1, 4, 2, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -298,8 +300,8 @@ CREATE TABLE `ubicaciones` (
 --
 
 INSERT INTO `ubicaciones` (`Id_ubicacion`, `Latitud`, `Longitud`) VALUES
-(41, '3.434319', '-76.526253'),
-(42, '3.452247', '-76.513938');
+(1, '3.423657', '-76.558179'),
+(2, '3.420701', '-76.560099');
 
 -- --------------------------------------------------------
 
@@ -369,8 +371,9 @@ CREATE TABLE `videos` (
 --
 
 INSERT INTO `videos` (`Id_videos`, `Nombre_vid`) VALUES
-(31, 'X88B6RBCPT5WPKFT.mp4'),
-(32, 'BJ5WH02X1Q6K4GOX.gif');
+(1, 'Algoritmo Dijkstra.gif'),
+(2, 'gif2.gif'),
+(3, 'gif.gif');
 
 --
 -- Índices para tablas volcadas
@@ -498,7 +501,7 @@ ALTER TABLE `estados`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `Id_imagenes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `Id_imagenes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `notificaciones`
@@ -510,7 +513,7 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `ordenes_mantenimiento`
 --
 ALTER TABLE `ordenes_mantenimiento`
-  MODIFY `Id_ordenes_mantenimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id_ordenes_mantenimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `prioridades`
@@ -522,7 +525,7 @@ ALTER TABLE `prioridades`
 -- AUTO_INCREMENT de la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  MODIFY `Id_reportes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `Id_reportes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -540,7 +543,7 @@ ALTER TABLE `tipos_danos`
 -- AUTO_INCREMENT de la tabla `ubicaciones`
 --
 ALTER TABLE `ubicaciones`
-  MODIFY `Id_ubicacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `Id_ubicacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `unidades_medida`
@@ -558,7 +561,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `Id_videos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `Id_videos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
