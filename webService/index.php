@@ -36,8 +36,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/pin.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../assets/img/pin.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -77,11 +76,6 @@
     </div><!-- End Logo -->
 
 
-
-    <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-      <i class="bi bi-bell"></i>
-      <span class="badge bg-primary badge-number">1</span>
-    </a> -->
     <!-- End Notification Icon -->
 
     <nav class="header-nav ms-auto">
@@ -90,7 +84,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="../assets/img/pin.png" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">
                 <?php echo $usuario->Usu_nombre . ' ' . $usuario->Apellido ;?>
             </span>
@@ -106,9 +100,19 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="MiPerfil.php">
+              <a class="dropdown-item d-flex align-items-center" href="<?php echo getUrl("Miperfil","Miperfil","Verperfil",false,"ajax")?>">
                 <i class="bi bi-person"></i>
                 <span>Mi perfil</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="<?php echo getUrl("Miperfil","Miperfil","Vercontraseña",false,"ajax")?>">
+                <i class="bi bi-person-lock"></i>
+                <span>Cambiar contraseña</span>
               </a>
             </li>
             <li>

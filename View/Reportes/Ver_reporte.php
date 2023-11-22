@@ -81,9 +81,27 @@
                         <div class="col-4 text-center">
                             <a href=<?php echo getUrl("Reportes","Reportes","index",false,"ajax")?>><button type="button" class="btn btn-secondary col-4">Regresar</button></a>
                         </div>
-                        <div class="col-6 text-center">
-                            <a href=<?php echo getUrl("Orden_mto","Orden_mto","getCrear",false,"ajax")?>><button type="button" class="btn btn-success col-4">Crear orden MTO</button></a>
-                        </div>
+                        <?php 
+                            if($estado==1){
+                        ?>
+                            <div class="col-6 text-center">
+                                <a href=<?php echo getUrl("Orden_mto","Orden_mto","getCrear",false,"ajax")?>><button type="button" class="btn btn-success col-4">Crear orden MTO</button></a>
+                            </div>
+                        <?php 
+                            }else if($estado==2){
+                        ?>
+                            <div class="col-6 text-center">
+                                <a href=<?php echo getUrl("Orden_mto","Orden_mto","getEditar",array("Id_ordenes"=>$id_orden),"ajax")?>><button type="button" class="btn btn-success col-4">Ver orden MTO</button></a>
+                            </div>
+                        <?php 
+                            }else if($estado==3){
+                        ?>
+                                    <div class="col-6 text-center">
+                                        <a href=<?php echo getUrl("Reportes","Reportes","verOrden",array("Id_ordenes"=>$id_orden),"ajax")?>><button type="button" class="btn btn-success col-4">Ver orden MTO</button></a>
+                                    </div>
+                        <?php 
+                            }
+                        ?>
                     </div>
                 </form><!-- Vertical Form -->
         </div>

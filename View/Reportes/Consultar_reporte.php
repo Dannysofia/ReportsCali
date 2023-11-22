@@ -1,3 +1,19 @@
+<?php
+    if(isset($_SESSION['reportesb'])){
+?>
+
+<div class="position-absolute top-0 end-0 p-3" style="z-index: 5;">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        <?php echo $_SESSION['reportesb'];?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+<?php
+    }
+    unset($_SESSION['reportesb']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

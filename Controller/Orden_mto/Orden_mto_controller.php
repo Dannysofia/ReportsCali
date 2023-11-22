@@ -107,7 +107,8 @@ class Orden_mto_controller {
                 $responsereporte = $conexion->actualizar($sql);
 
                 if($response){
-                    redirect('ajax.php?modulo=Reportes&controlador=Reportes&funcion=index');
+                    $_SESSION['ordenc']="La orden se creo de manera exitosa";
+                    redirect('ajax.php?modulo=Orden_mto&controlador=Orden_mto&funcion=index');
                 }
 
             }else{
@@ -183,7 +184,6 @@ class Orden_mto_controller {
             $estado=$_POST['estado'];
             $supervisor=$_POST['supervisor'];
             $imagen=$_FILES['imagen'];
-            var_dump($imagen);
             $id_reporte=$_SESSION['reporte'];
 
 
@@ -204,7 +204,7 @@ class Orden_mto_controller {
                      $id_est= $row -> Id_estado;
                 }
 
-                if(!empty($imagen)){
+                if($id_est==3){
                     //Guardar imagenes cargadas en la carpeta img de assets
                     $carpeta_destino = "../assets/img/";
                     $nombre_imagen = $_FILES['imagen']['name'];
@@ -223,7 +223,9 @@ class Orden_mto_controller {
                         $id_img= $row -> Id_imagenes;
                     }
 
-                    $sql= "UPDATE ordenes_mantenimiento SET Descripcion='$descripcion', Id_prioridad=$id_pri, Id_estado=$id_est, Supervisor='$supervisor', Id_imagen=$id_img WHERE id_ordenes_mantenimiento=$id_orden";
+                    $fechat="20".date('y')."-".date('m')."-".date('d');
+
+                    $sql= "UPDATE ordenes_mantenimiento SET Descripcion='$descripcion', Id_prioridad=$id_pri, Id_estado=$id_est, Supervisor='$supervisor', Id_imagen=$id_img, Fecha_terminacion='$fechat' WHERE id_ordenes_mantenimiento=$id_orden";
                     $response = $conexion->actualizar($sql);
 
                     $sql="UPDATE reportes SET Id_orden_mantenimiento=$id_orden,Id_estado=3 WHERE Id_reportes=$id_reporte";
@@ -236,6 +238,7 @@ class Orden_mto_controller {
                 }
 
                 if($response){
+                    $_SESSION['ordene']="La orden se actualizo de manera exitosa";
                     redirect('ajax.php?modulo=Orden_mto&controlador=Orden_mto&funcion=index');
                 }
             }else{
@@ -281,6 +284,46 @@ class Orden_mto_controller {
                 }
 
                 include_once '../View/Orden_mto/Ver_Orden_mto.php';
+            }catch (PDOException $e) {
+                $response = array(
+                    "success" => false,
+                    "message" => "Error: " . $e->getMessage()
+                );
+                //Devolver la respuesta en formato JSON en caso de error
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            }
+        }
+
+        function Verreporte(){
+
+            try{ 
+                $conexion=new Orden_model();
+    
+                $id_orden=$_GET['Id_ordenes'];
+
+                $sql="SELECT r.Id_reportes,r.Direccion,r.Descripcion,r.Tamano,r.Id_unidad,u.Uni_nombre,r.Id_imagen,i.Nombre_img,r.Id_video,v.Nombre_vid,r.Id_estado,e.Est_nombre,r.Id_tipos_danos,t.Tip_nombre,r.Id_ubicacion,l.Latitud,l.Longitud,r.Id_barrio,b.Bar_nombre,r.Id_orden_mantenimiento, r.Id_estado FROM reportes AS r,unidades_medida AS u, imagenes AS i, videos AS v, estados AS e, tipos_danos AS t, ubicaciones AS l, barrios AS b WHERE r.Id_estado=e.Id_estado AND r.Id_unidad=u.Id_Unidad AND r.Id_imagen=i.Id_imagenes AND r.Id_video=v.Id_videos AND r.Id_tipos_danos=t.Id_tipos_danos AND r.Id_ubicacion=l.Id_ubicacion AND r.Id_barrio=b.Id_barrio AND r.Id_orden_mantenimiento=$id_orden";
+                $response = $conexion->consultar($sql);
+    
+                if($response){
+                    foreach ($response as $row){
+                        $dano=$row->Tip_nombre;
+                        $dir=$row->Direccion;
+                        $tamaño=$row->Tamano;
+                        $unidad=$row->Uni_nombre;
+                        $lat=$row->Latitud;
+                        $lon=$row->Longitud;
+                        $barrio=$row->Bar_nombre;
+                        $desc=$row->Descripcion;
+                        $img=$row->Nombre_img;
+                        $vid=$row->Nombre_vid;
+                        $_SESSION['reporte']=$row->Id_reportes;
+                        $id_orden=$row->Id_orden_mantenimiento;
+                        $estado=$row->Id_estado;
+                    }
+                }
+    
+                include_once '../View/Reportes/Ver_reporte.php';
             }catch (PDOException $e) {
                 $response = array(
                     "success" => false,

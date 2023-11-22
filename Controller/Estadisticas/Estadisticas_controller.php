@@ -8,14 +8,15 @@ class Estadisticas_controller {
                 // Crear una instancia de la clase 'Login_model'
                 $conexion = new Estadisticas_model();
 
-                $sql = "SELECT id_estado, COUNT(*) as cantidad_reportes
-                FROM reportes
-                GROUP BY id_estado";
+                $sql = "SELECT e.Est_nombre, COUNT(r.id_estado) as cantidad_reportes
+                FROM reportes r
+                INNER JOIN estados e ON r.id_estado = e.id_estado
+                GROUP BY r.id_estado, e.Est_nombre";
                 $result = $conexion->consultar($sql);
 
                 if ($result) {
                     foreach($result as $row){
-                        $data[] = array('cantidad_reportes' => $row->cantidad_reportes);
+                        $data[] = array('cantidad_reportes' => $row->cantidad_reportes,'estado' => $row->Est_nombre);
                     }
                 }
 
@@ -98,5 +99,34 @@ class Estadisticas_controller {
         echo json_encode($response);
     }
 
+    }
+
+    function Prioridad() {
+        try {
+                // Crear una instancia de la clase 'Login_model'
+                $conexion = new Estadisticas_model();
+
+                $sql = "SELECT p.Pri_nombre, COUNT(o.id_prioridad) as cantpri
+                FROM ordenes_mantenimiento o
+                INNER JOIN prioridades p ON o.id_prioridad = p.id_prioridades
+                GROUP BY o.id_prioridad, p.Pri_nombre";
+                $result = $conexion->consultar($sql);
+
+                if ($result) {
+                    foreach($result as $row){
+                        $data[] = array('cantp' => $row->cantpri,'prioridad' => $row->Pri_nombre);
+                    }
+                }
+
+                return $data_json = json_encode($data);
+        } catch (PDOException $e) {
+            $response = array(
+                "success" => false,
+                "message" => "Error: " . $e->getMessage()
+            );
+            //Devolver la respuesta en formato JSON en caso de error
+            //header('Content-Type: application/json');
+            echo json_encode($response);
+        }
     }
 }

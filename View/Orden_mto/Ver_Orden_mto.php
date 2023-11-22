@@ -73,7 +73,7 @@
                             <a href=<?php echo getUrl("Orden_mto","Orden_mto","index",false,"ajax")?>><button type="button" class="btn btn-secondary col-4">Cancelar</button></a>
                         </div>
                         <div class="col-4 text-center">
-                            <a href=<?php echo getUrl("Reportes","Reportes","index",false,"ajax")?>><button type="button" class="btn btn-success col-4">Ver reporte</button></a>
+                            <a href=<?php echo getUrl("Orden_mto","Orden_mto","Verreporte",array("Id_ordenes"=>$id_orden),"ajax")?>><button type="button" class="btn btn-success col-4">Ver reporte</button></a>
                         </div>
                     </div>
                 </form><!-- Vertical Form -->

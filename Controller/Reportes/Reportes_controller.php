@@ -146,6 +146,7 @@ class Reportes_controller {
                 $response = $conexion->insertar($sql);
 
                 if($response){
+                    $_SESSION['reportesb']="El reporte se creo de manera exitosa";
                     redirect('ajax.php?modulo=Reportes&controlador=Reportes&funcion=index');
                 }
             }else{
@@ -174,7 +175,7 @@ class Reportes_controller {
 
             $id_reporte=$_GET['Id_reportes'];
 
-            $sql="SELECT r.Id_reportes,r.Direccion,r.Descripcion,r.Tamano,r.Id_unidad,u.Uni_nombre,r.Id_imagen,i.Nombre_img,r.Id_video,v.Nombre_vid,r.Id_estado,e.Est_nombre,r.Id_tipos_danos,t.Tip_nombre,r.Id_ubicacion,l.Latitud,l.Longitud,r.Id_barrio,b.Bar_nombre FROM reportes AS r,unidades_medida AS u, imagenes AS i, videos AS v, estados AS e, tipos_danos AS t, ubicaciones AS l, barrios AS b WHERE r.Id_reportes=$id_reporte AND r.Id_estado=e.Id_estado AND r.Id_unidad=u.Id_Unidad AND r.Id_imagen=i.Id_imagenes AND r.Id_video=v.Id_videos AND r.Id_tipos_danos=t.Id_tipos_danos AND r.Id_ubicacion=l.Id_ubicacion AND r.Id_barrio=b.Id_barrio";
+            $sql="SELECT r.Id_reportes,r.Direccion,r.Descripcion,r.Tamano,r.Id_unidad,u.Uni_nombre,r.Id_imagen,i.Nombre_img,r.Id_video,v.Nombre_vid,r.Id_estado,e.Est_nombre,r.Id_tipos_danos,t.Tip_nombre,r.Id_ubicacion,l.Latitud,l.Longitud,r.Id_barrio,b.Bar_nombre,r.Id_orden_mantenimiento, r.Id_estado FROM reportes AS r,unidades_medida AS u, imagenes AS i, videos AS v, estados AS e, tipos_danos AS t, ubicaciones AS l, barrios AS b WHERE r.Id_reportes=$id_reporte AND r.Id_estado=e.Id_estado AND r.Id_unidad=u.Id_Unidad AND r.Id_imagen=i.Id_imagenes AND r.Id_video=v.Id_videos AND r.Id_tipos_danos=t.Id_tipos_danos AND r.Id_ubicacion=l.Id_ubicacion AND r.Id_barrio=b.Id_barrio";
             $response = $conexion->consultar($sql);
 
             if($response){
@@ -190,6 +191,8 @@ class Reportes_controller {
                     $img=$row->Nombre_img;
                     $vid=$row->Nombre_vid;
                     $_SESSION['reporte']=$row->Id_reportes;
+                    $id_orden=$row->Id_orden_mantenimiento;
+                    $estado=$row->Id_estado;
                 }
             }
 
@@ -203,7 +206,41 @@ class Reportes_controller {
             header('Content-Type: application/json');
             echo json_encode($response);
         }
+    }
 
-        include_once '../View/Reportes/Ver_reporte.php'; 
+    function verOrden(){
+
+        try{ 
+            $conexion=new Reportes_model();
+
+            $id_orden=$_GET['Id_ordenes'];
+
+            $sql="SELECT o.Id_ordenes_mantenimiento,o.Descripcion,o.Fecha_creacion,o.Id_estado,e.Est_nombre,o.Id_prioridad,p.Pri_nombre, o.Id_usuario, u.Usu_nombre, u.Apellido, o.Supervisor, o.Id_imagen, i.Nombre_img FROM ordenes_mantenimiento AS o,estados AS e, prioridades AS p, usuarios AS u, imagenes AS i WHERE o.Id_ordenes_mantenimiento=$id_orden AND o.Id_estado=3  AND o.Id_prioridad=p.Id_prioridades AND o.Id_usuario=u.Id_usuario AND o.Id_imagen=i.Id_imagenes";
+            $response = $conexion->consultar($sql);
+
+            if($response){
+                foreach ($response as $row){
+                    $fechac=$row->Fecha_creacion;
+                    $Prioridad=$row->Pri_nombre;
+                    $Estado=$row->Est_nombre;
+                    $Supervisor=$row->Supervisor;
+                    $Usuario=$row->Usu_nombre." ".$row->Apellido;
+                    $Descripcion=$row->Descripcion;
+                    $Imagen=$row->Nombre_img;
+                    $id_orden=$row->Id_ordenes_mantenimiento;
+                    $id_estado=$row->Id_estado;
+                }
+            }
+
+            include_once '../View/Orden_mto/Ver_Orden_mto.php';
+        }catch (PDOException $e) {
+            $response = array(
+                "success" => false,
+                "message" => "Error: " . $e->getMessage()
+            );
+            //Devolver la respuesta en formato JSON en caso de error
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        }
     }
 }

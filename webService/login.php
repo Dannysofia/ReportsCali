@@ -3,6 +3,33 @@
     if(isset($_SESSION['usuario']) === true){
       redirect('index.php');
     }
+    if(isset($_SESSION['loginm'])){
+?>
+
+<div class="position-absolute top-0 end-0 p-3" style="z-index: 5;">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        <?php echo $_SESSION['loginm'];?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+<?php
+    }
+    unset($_SESSION['loginm']);
+
+    if(isset($_SESSION['registrob'])){
+?>
+
+<div class="position-absolute top-0 end-0 p-3" style="z-index: 5;">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        <?php echo $_SESSION['registrob'];?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+<?php
+    }
+    unset($_SESSION['registrob']);
 ?>
 
 <!DOCTYPE html>
@@ -115,6 +142,8 @@
 
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
+  <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

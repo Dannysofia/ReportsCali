@@ -40,7 +40,7 @@
                     </div>  
                     <div class="col-12">
                         <label for="prioridad" class="form-label">Prioridad</label>
-                        <select id="prioridad" class="form-select" name="prioridad" >
+                        <select id="prioridad" class="form-select" name="prioridad">
                             <?php 
                             if($responsePri){
                                 echo "<option selected>Seleccione</option>";
@@ -65,13 +65,13 @@
                     </div>
                     <div class="col-12 justify-content-center">
                         <label for="supervisor" class="form-label">Supervisor</label>
-                        <input type="text" class="form-control" name="supervisor" id="supervisor">
+                        <input type="text" class="form-control" name="supervisor" id="supervisor" required>
                     </div>
                 </div>
                 <div class="col-6 justify-content-center">
                     <label for="descripcion" class="form-label">Descripción mantenimiento</label> 
                     <div class="col-12 justify-content-center">
-                            <textarea id="descripcion" name="descripcion" rows="13" cols="50" style="resize: none; border-round; border-radius: 8px;"></textarea>
+                            <textarea id="descripcion" name="descripcion" rows="13" cols="50" style="resize: none; border-round; border-radius: 8px;" required></textarea>
                     </div> 
                 </div>
                 

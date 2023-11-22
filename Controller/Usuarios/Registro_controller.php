@@ -48,6 +48,7 @@ class Registro_controller{
                     $response = $crud->insertar($sql);
 
                     if($response=="Registro insertado correctamente."){
+                      $_SESSION['registrob']="El usuario se registro de manera exitosa";
                       redirect('login.php');
                     }else{
                       echo "No";

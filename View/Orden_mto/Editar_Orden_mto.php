@@ -79,13 +79,13 @@
                         </div>
                         <div class="col-12 justify-content-center">
                             <label for="supervisor" class="form-label">Supervisor</label>
-                            <input type="text" class="form-control" name="supervisor" id="supervisor" value="<?php echo $Supervisor?>">
+                            <input type="text" class="form-control" name="supervisor" id="supervisor" value="<?php echo $Supervisor?>" required>
                         </div>
                     </div>
                     <div class="col-6 justify-content-center">
                         <label for="descripcion" class="form-label">Descripción mantenimiento</label> 
                         <div class="col-12 justify-content-center">
-                                <textarea id="descripcion" name="descripcion" rows="13" cols="50" style="resize: none; border-round; border-radius: 8px;"><?php echo $Descripcion?></textarea>
+                                <textarea id="descripcion" name="descripcion" rows="13" cols="50" style="resize: none; border-round; border-radius: 8px;" required><?php echo $Descripcion?></textarea>
                         </div> 
                     </div>
 
@@ -100,6 +100,9 @@
                         </div>
                         <div class="col-4 text-center">
                             <button type="submit" class="btn btn-primary col-4">Guardar</button>
+                        </div>
+                        <div class="col-4 text-center">
+                            <a href=<?php echo getUrl("Orden_mto","Orden_mto","Verreporte",array("Id_ordenes"=>$id_orden),"ajax")?>><button type="button" class="btn btn-success col-4">Ver reporte</button></a>
                         </div>
                     </div>
                 </form><!-- Vertical Form -->

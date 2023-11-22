@@ -29,14 +29,10 @@ class Login_controller {
                     // Verificar si se encontraron resultados en la consulta
                     if (!empty($response) && count($response) > 0) {
                         // Inicio de sesión exitoso, imprime la respuesta deseada
-                        echo "OK";
                         redirect('index.php'); 
                     } else {
                         // Inicio de sesión fallido, imprime un mensaje de error
-                        echo "<div class='alert alert-primary alert-dismissible fade show' role='alert'>".
-                        "Correo electronico y/o Contraseña incorrecta".
-                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>".
-                        "</button></div>";
+                        $_SESSION['loginm']="Correo y/o contraseña incorrecta";
 
                         redirect('login.php');
                     }

@@ -5,6 +5,7 @@ $test = new Estadisticas_controller();
 $dataEstado = $test->Estado();
 $dataDanos = $test->tipodaño();
 $meses = $test->meses();
+$prioridad= $test->Prioridad();
 
 
 ?>
@@ -76,15 +77,12 @@ $meses = $test->meses();
                 // Utiliza los datos JSON obtenidos de PHP
                 var dataFromPHP =<?php echo $dataEstado; ?>;
                 var values = dataFromPHP.map(item => item.cantidad_reportes);
+                var labell = dataFromPHP.map(item => item.estado);
                 document.addEventListener("DOMContentLoaded", () => {
                     new Chart(document.querySelector('#pieChart'), {
                         type: 'pie',
                         data: {
-                            labels: [
-                                'Pendiente',
-                                'En proceso',
-                                'Completado'
-                            ],
+                            labels: labell,
                             datasets: [{
                                 label: '',
                                 data: values,
@@ -163,54 +161,39 @@ $meses = $test->meses();
     </div>
 </div>
 
-<div class="col-lg-6">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Ordenes de mantenimiento por prioridad</h5>
+    <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Ordenes de mantenimiento por prioridad</h5>
 
-            <!-- Stacked Bar Chart -->
-            <canvas id="stakedBarChart" style="max-height: 500px;"></canvas>
-            <script>
+              <!-- Doughnut Chart -->
+              <canvas id="doughnutChart" style="max-height: 250px;"></canvas>
+              <script>
+                // Utiliza los datos JSON obtenidos de PHP
+                var dataFromPHP =<?php echo $prioridad; ?>;
+                var valuesp = dataFromPHP.map(item => item.cantp);
+                var labelp = dataFromPHP.map(item => item.prioridad);
                 document.addEventListener("DOMContentLoaded", () => {
-                    new Chart(document.querySelector('#stakedBarChart'), {
-                        type: 'bar',
-                        data: {
-                            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
-                            datasets: [{
-                                label: 'Alta',
-                                data: [-75, -15, 18, 48, 74],
-                                backgroundColor: 'rgb(255, 99, 132)',
-                            },
-                            {
-                                label: 'Media',
-                                data: [-11, -1, 12, 62, 95],
-                                backgroundColor: 'rgb(255, 205, 86)',
-                            },
-                            {
-                                label: 'Baja',
-                                data: [-44, -5, 22, 35, 62],
-                                backgroundColor: 'rgb(75, 192, 192)',
-                            },
-                            ]
-                        },
-                        options: {
-                            plugins: {
-                            },
-                            responsive: true,
-                            scales: {
-                                x: {
-                                    stacked: true,
-                                },
-                                y: {
-                                    stacked: true
-                                }
-                            }
-                        }
-                    });
+                  new Chart(document.querySelector('#doughnutChart'), {
+                    type: 'doughnut',
+                    data: {
+                      labels: labelp,
+                      datasets: [{
+                        label:'',
+                        data: valuesp,
+                        backgroundColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(54, 162, 235)',
+                          'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    }
+                  });
                 });
-            </script>
-            <!-- End Stacked Bar Chart -->
+              </script>
+              <!-- End Doughnut CHart -->
 
-        </div>
+            </div>
+          </div>
     </div>
-</div>
